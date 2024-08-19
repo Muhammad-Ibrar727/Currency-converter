@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k6L1Qm0k1pWj2J3+l1ZfHtq7uZgntp6Cp7IVPLgJx2sNEtr7FMEBoZP5k9gjZ5Cwo9EP3wwQF4lbQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="converter">
+        <h1><i class="fas fa-exchange-alt"></i> Currency Converter</h1>
+        <div class="input-section">
+            <div class="input-group">
+                <label for="amount"><i class="fas fa-dollar-sign"></i></label>
+                <input type="number" id="amount" placeholder="Enter amount" />
+            </div>
+            <div class="input-group">
+                <label for="fromCurrency"><i class="fas fa-angle-down"></i></label>
+                <div class="custom-select" id="fromCurrency"></div>
+            </div>
+            <div class="input-group">
+                <label for="toCurrency"><i class="fas fa-angle-down"></i></label>
+                <div class="custom-select" id="toCurrency"></div>
+            </div>
+        </div>
+        <button id="convertBtn"><i class="fas fa-sync-alt"></i> Convert</button>
+        <div class="result">
+            <h2 id="resultText"></h2>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
