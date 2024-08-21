@@ -1,4 +1,4 @@
-const apiKey = 'Enter your api here';
+const apiKey = 'Enter your API here';
 
 const apiUrl = `https://api.exchangerate-api.com/v4/latest/USD`;
 
@@ -75,8 +75,7 @@ const currencyFlags = {
     'IQD': 'https://flagcdn.com/iq.svg', // Iraqi Dinar
 };
 
-
-async function populateCurrencyOptions(selectElement) {
+async function populateCurrencyOptions(selectElement, defaultCurrency) {
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -84,8 +83,9 @@ async function populateCurrencyOptions(selectElement) {
 
         const selected = document.createElement('div');
         selected.classList.add('select-selected');
-        selected.innerHTML = `<img src="${currencyFlags['USD']}" alt="" /> USD`;
+        selected.innerHTML = `<img src="${currencyFlags[defaultCurrency]}" alt="" /> ${defaultCurrency}`;
         selectElement.appendChild(selected);
+        selectElement.dataset.value = defaultCurrency; // Set the default currency value
 
         const optionsContainer = document.createElement('div');
         optionsContainer.classList.add('select-items');
@@ -95,8 +95,8 @@ async function populateCurrencyOptions(selectElement) {
             option.innerHTML = `<img src="${currencyFlags[currency] || ''}" alt="S" /> ${currency}`;
             option.addEventListener('click', function() {
                 selected.innerHTML = this.innerHTML;
+                selectElement.dataset.value = currency; // Update the dataset value
                 closeAllSelect();
-                selectElement.dataset.value = currency;
             });
             optionsContainer.appendChild(option);
         });
@@ -114,6 +114,7 @@ async function populateCurrencyOptions(selectElement) {
     }
 }
 
+// Function to close all select options
 function closeAllSelect(el) {
     const items = document.querySelectorAll('.select-items');
     const selectedItems = document.querySelectorAll('.select-selected');
@@ -131,6 +132,7 @@ function closeAllSelect(el) {
 
 document.addEventListener('click', closeAllSelect);
 
+// Function to handle currency conversion
 async function convertCurrency() {
     const amount = document.getElementById('amount').value;
     const from = fromCurrency.dataset.value;
@@ -138,6 +140,11 @@ async function convertCurrency() {
 
     if (amount === '' || isNaN(amount)) {
         alert('Please enter a valid amount');
+        return;
+    }
+
+    if (!from || !to) {
+        alert('Please select valid currencies');
         return;
     }
 
@@ -154,7 +161,9 @@ async function convertCurrency() {
     }
 }
 
-populateCurrencyOptions(fromCurrency);
-populateCurrencyOptions(toCurrency);
+// Populate the currency options for both dropdowns
+populateCurrencyOptions(fromCurrency, 'USD');
+populateCurrencyOptions(toCurrency, 'PKR');
 
+// Event listener for the convert button
 convertBtn.addEventListener('click', convertCurrency);
